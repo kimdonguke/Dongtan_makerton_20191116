@@ -65,7 +65,7 @@
         android:id="@+id/res_yeartxt"
         />
     <EditText
-        android:layout_width="280dp"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/justlocate"
         app:layout_constraintLeft_toLeftOf="@+id/justlocate"
@@ -81,6 +81,14 @@
         android:letterSpacing="0.2"
         android:lineSpacingExtra="3.3sp"
         android:id="@+id/res_btn"
+        />
+    <Button
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:text="위치"
+        app:layout_constraintTop_toBottomOf="@+id/justlocate"
+        app:layout_constraintLeft_toRightOf="@+id/res_locate"
+        android:id="@+id/res_btnlocate"
         />
 
 
