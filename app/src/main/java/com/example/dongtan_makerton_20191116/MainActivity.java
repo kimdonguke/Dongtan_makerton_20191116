@@ -25,8 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String SETTINGS_PLAYER = "settings_player";
     private BluetoothSPP bt;
     String name, year, locate;
-   // private String hakbun="10607";
-    //private EditText hak_edit;
+
     Intent intent;
     Button testbtn;
     SharedPreferences pref1;
@@ -182,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
             smsManager.sendTextMessage(phoneNum, null, "긴급상황입니다."+where+"에서 "+year+" 세 "+name+"가 "+symptom, null, null);
             Toast.makeText(getApplicationContext(), "전송 완료!", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "전송실패, 잠시 뒤에 시도하세요", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "전송실패, 잠시 뒤에 시도하세요"+e, Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
     }

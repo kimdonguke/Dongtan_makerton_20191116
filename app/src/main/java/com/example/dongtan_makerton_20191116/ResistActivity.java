@@ -57,9 +57,8 @@ public class ResistActivity extends AppCompatActivity {
         } else {
             checkRunTimePermission();
         }
-        SharedPreferences pref1 = getSharedPreferences("image", MODE_PRIVATE);
-        String startimage = pref1.getString("imagestrings", null);
-        Bitmap bitmap = StringToBitmap(startimage);
+
+        String startimage = getSettingItem("imagestrings");//string 형태로 저장된 이미지 불러오기
 
         Button ShowLocationButton = (Button) findViewById(R.id.res_btnlocate);
         name = findViewById(R.id.res_nametxt);
@@ -69,6 +68,7 @@ public class ResistActivity extends AppCompatActivity {
         year.setText(getSettingItem("year"));
         locate.setText(getSettingItem("locate"));
         if(startimage!=null){
+            Bitmap bitmap = StringToBitmap(startimage);//string 형태로 저장된 이미지 bitmap 형태로 가공
             imageview.setImageBitmap(bitmap);
         }
         button = findViewById(R.id.res_btn);
@@ -82,7 +82,7 @@ public class ResistActivity extends AppCompatActivity {
                 startActivityForResult(intent, GET_GALLERY_IMAGE);
             }
         });
-        button.setOnClickListener(new View.OnClickListener() { // 가입 완료
+        button.setOnClickListener(new View.OnClickListener() { // 저장 완료
             @Override
             public void onClick(View v) {
                 imageview.buildDrawingCache();
@@ -107,6 +107,16 @@ public class ResistActivity extends AppCompatActivity {
                 locate.setText(address);
             }
         });
+    }
+    public Bitmap StringToBitmap(String encodedString) {
+        try {
+            byte[] encodedByte=Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodedByte,0,encodedByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
     private String getSettingItem(String key) {
         return getSharedPreferences(SETTINGS_PLAYER, 0).getString(key, null);
@@ -299,15 +309,6 @@ public class ResistActivity extends AppCompatActivity {
         }
     }
 
-    public Bitmap StringToBitmap(String encodedString) {
-        try {
-            byte[] encodedByte=Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap= BitmapFactory.decodeByteArray(encodedByte,0,encodedByte.length);
-            return bitmap;
-        } catch (Exception e) {
-            e.getMessage();
-            return null;
-        }
-    }
+
 
 }
