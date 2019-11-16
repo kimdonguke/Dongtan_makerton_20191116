@@ -1,12 +1,16 @@
 package com.example.dongtan_makerton_20191116;
 
+import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.telephony.SmsManager;
@@ -16,6 +20,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import app.akexorcist.bluetotohspp.library.BluetoothSPP;
 import app.akexorcist.bluetotohspp.library.BluetoothState;
 import app.akexorcist.bluetotohspp.library.DeviceList;
@@ -56,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         bt.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() { //데이터 수신
-            public void onDataReceived(byte[] data, String message) {
+            public void onDataReceived(byte[] data, String message) {// 형 이거 아두이노에서 값 받을때만 실행되는 코드라 저기 위애 다른곳으로 가야함
 
                 switch (Integer.parseInt(message)){
                     case 0:
@@ -67,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 2:
                         SendMessage(getSettingItem("locate"),getSettingItem("year"),getSettingItem("name")," 사용자에게 충격 발생");
-                        break;
+                        break;//형 근데 아까 그 권한은 블투
                 }
                 Log.e("test",message+" "+bt.getConnectedDeviceName());
             }
@@ -94,11 +100,11 @@ public class MainActivity extends AppCompatActivity {
         Button btnConnect = findViewById(R.id.btnConnect); //연결시도
         btnConnect.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (bt.getServiceState() == BluetoothState.STATE_CONNECTED) {
+                if (bt.getServiceState() == BluetoothState.STATE_CONNECTED) {//빌드 가자이
                     bt.disconnect();
                 } else {
                     Intent intent = new Intent(getApplicationContext(), DeviceList.class);
-                    startActivityForResult(intent, BluetoothState.REQUEST_CONNECT_DEVICE);
+                    startActivityForResult(intent, BluetoothState.REQUEST_CONNECT_DEVICE);//형 전송했어 받아짐?
                 }
             }
         });
@@ -109,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         testbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SendMessage("동탄","김동욱","17","나는 이신우다");
+                SendMessage(getSettingItem("locate"),"김민준이","17","나는 김민준이다"); // ? ㅎ시바 <- 이거 보냄 형한테 동욱아 지금 오는건 당연한건데 앱 삭제했다가 다시했어? ㄱㄷ ㅊ찬희 왔어?  yesrmfj그럼 그거로 전화걸어
             }
         });
     }
@@ -175,14 +181,38 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
-    public void SendMessage(String where, String name,String year,String symptom){
-        String phoneNum="01021836707";
-        try {
-            smsManager.sendTextMessage(phoneNum, null, "긴급상황입니다."+where+"에서 "+year+" 세 "+name+"가 "+symptom, null, null);
-            Toast.makeText(getApplicationContext(), "전송 완료!", Toast.LENGTH_LONG).show();
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "전송실패, 잠시 뒤에 시도하세요"+e, Toast.LENGTH_LONG).show();
-            e.printStackTrace();
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(requestCode==6974){
+            if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                //퍼미션 허용 됐다 이말이야
+            }
+            else if(grantResults[0]==PackageManager.PERMISSION_DENIED){
+
+            }
         }
+    }//지려버렷다 이말입니다 형님
+    //지금 내옆에서 자꾸 지렸다 얘기하지ㅜ 마라-찬희 진짜 크
+
+    public void SendMessage(String where, String name, String year, String symptom){
+        String phoneNum="01042383021"; //보내보셈  ㅇㅋㅇㅋ ㄱㄷㄱㄷ
+
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)!= PackageManager.PERMISSION_GRANTED){  //문자 보내는 권한이 없을때는 이 if문이 실행됌 밑에서 권한요청함
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.SEND_SMS},6974);
+
+        }
+        else{ //권한이 있으면 이쪽 엘스로 빠짐 여기다 문자 쳐보내면됌 히히 깃에다 처올려야징
+            try {
+                smsManager.sendTextMessage(phoneNum, null, "긴급상황입니다."+where+"에서 "+year+" 세 "+name+"가 "+symptom, null, null);
+                Toast.makeText(getApplicationContext(), "전송 완료!", Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "전송실패, 잠시 뒤에 시도하세요"+e, Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+        }
+
     }
 }
