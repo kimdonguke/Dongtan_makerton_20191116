@@ -27,7 +27,7 @@
         android:id="@+id/justyear"
         />
     <!--생년 월 일-->
-    <ImageButton
+    <ImageView
         android:layout_width="280dp"
         android:layout_height="280dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -80,6 +80,7 @@
         android:layout_marginTop="20dp"
         android:letterSpacing="0.2"
         android:lineSpacingExtra="3.3sp"
+        android:id="@+id/res_btn"
         />
 
 

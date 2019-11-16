@@ -15,15 +15,25 @@ import app.akexorcist.bluetotohspp.library.BluetoothState;
 import app.akexorcist.bluetotohspp.library.DeviceList;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static final String SETTINGS_PLAYER = "settings_player";
     private BluetoothSPP bt;
+    String name, year, locate;
    // private String hakbun="10607";
     //private EditText hak_edit;
-
+    Intent intent;
+    Button button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        button=findViewById(R.id.testintent);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent=new Intent(MainActivity.this,ResistActivity.class);
+                startActivity(intent);
+            }
+        });
         bt = new BluetoothSPP(this); //Initializing
 
         if (!bt.isBluetoothAvailable()) { //블루투스 사용 불가
@@ -35,6 +45,14 @@ public class MainActivity extends AppCompatActivity {
 
         bt.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() { //데이터 수신
             public void onDataReceived(byte[] data, String message) {
+                switch (Integer.parseInt(message)){
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                }
                 Log.e("test",message+" "+bt.getConnectedDeviceName());
             }
         });
@@ -68,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        year=getSettingItem("year");
+        name=getSettingItem("name");
+        locate=getSettingItem("locate");
     }
 
     public void onDestroy() {
@@ -115,5 +136,8 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         }
+    }
+    private String getSettingItem(String key) {
+        return getSharedPreferences(SETTINGS_PLAYER, 0).getString(key, null);
     }
 }
