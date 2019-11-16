@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,8 +20,10 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import app.akexorcist.bluetotohspp.library.BluetoothSPP;
@@ -31,8 +35,12 @@ public class MainActivity extends AppCompatActivity {
     private static final String SETTINGS_PLAYER = "settings_player";
     private BluetoothSPP bt;
     String name, year, locate;
+    TextView warning_textView;
 
     Intent intent;
+
+    ConstraintLayout layout;
+    AnimationDrawable animationDrawable;
 
     SharedPreferences pref1;
     SmsManager smsManager = SmsManager.getDefault();
@@ -40,9 +48,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        layout=(ConstraintLayout)findViewById(R.id.myLayout);
+        animationDrawable=(AnimationDrawable)layout.getBackground();
+        animationDrawable.setEnterFadeDuration(4500);
+        animationDrawable.setExitFadeDuration(4500);
+        animationDrawable.start();
+
         pref1=getSharedPreferences("image",MODE_PRIVATE);
         String image=pref1.getString("imagestrings","");
         Bitmap bitmap=StringToBitmap(image);
+        warning_textView=findViewById(R.id.warning_txt);
+
 
         button=findViewById(R.id.testintent);
         button.setOnClickListener(new View.OnClickListener() {
@@ -63,9 +79,9 @@ public class MainActivity extends AppCompatActivity {
 
         bt.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() { //데이터 수신
             public void onDataReceived(byte[] data, String message) {// 형 이거 아두이노에서 값 받을때만 실행되는 코드라 저기 위애 다른곳으로 가야함
-                        SendMessage(getSettingItem("locate"),getSettingItem("year"),getSettingItem("name")," 사용자에게 충격 발생");
-
-
+                SendMessage(getSettingItem("locate"),getSettingItem("year"),getSettingItem("name")," 사용자에게 충격 발생");
+                warning_textView.setText("이 환자에게 이상이 생겼습니다");
+                layout.setBackgroundColor(Color.parseColor("#FF0000"));
                 Log.e("test",message+" "+bt.getConnectedDeviceName());
             }
         });
@@ -102,13 +118,16 @@ public class MainActivity extends AppCompatActivity {
         year=getSettingItem("year");
         name=getSettingItem("name");
         locate=getSettingItem("locate");
+        //Button testbtn;
 //        testbtn=findViewById(R.id.testbtn);
 //        testbtn.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                SendMessage(getSettingItem("locate"),"김민준이","17","나는 김민준이다"); // ? ㅎ시바 <- 이거 보냄 형한테 동욱아 지금 오는건 당연한건데 앱 삭제했다가 다시했어? ㄱㄷ ㅊ찬희 왔어?  yesrmfj그럼 그거로 전화걸어
+//                warning_textView.setText("이 환자에게 이상이 생겼습니다." +
+//                        "가까운 기관에게 연결합니다.");
+//                layout.setBackgroundColor(Color.parseColor("#FF0000"));
 //            }
-//        });
+//        });// 이 리스너도 죽여버려야해
     }
 
     public void onDestroy() {

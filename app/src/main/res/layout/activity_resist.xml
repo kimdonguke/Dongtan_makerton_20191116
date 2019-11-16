@@ -84,8 +84,7 @@
         android:letterSpacing="0.2"
         android:lineSpacingExtra="3.3sp"
         android:id="@+id/res_btn"
-        android:background="#2979FF"
-        android:textColor="#EEEEEE"
+
         />
     <Button
         android:layout_width="70dp"
@@ -95,8 +94,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/res_locate"
         app:layout_constraintLeft_toRightOf="@+id/res_locate"
         android:id="@+id/res_btnlocate"
-        android:background="#2979FF"
-        android:textColor="#EEEEEE"
+
         />
 
 
