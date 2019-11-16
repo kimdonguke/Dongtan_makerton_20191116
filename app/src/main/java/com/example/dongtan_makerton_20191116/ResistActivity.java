@@ -98,12 +98,10 @@ public class ResistActivity extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 gpsTracker = new GpsTracker(ResistActivity.this); //gps 트래커 선언
-
                 double latitude = gpsTracker.getLatitude(); //경도 위도 선언 근데 별로 필요 없을듯
                 double longitude = gpsTracker.getLongitude();
-
                 String address = getCurrentAddress(latitude, longitude);// 아니다 여기서 필요하다 시발
-                locate.setText(address);
+                locate.setText(address.trim());
             }
         });
     }
@@ -295,13 +293,9 @@ public class ResistActivity extends AppCompatActivity {
 
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[0])
                         || ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[1])) {
-
                     Toast.makeText(ResistActivity.this, "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.", Toast.LENGTH_LONG).show();
                     finish();
-
-
                 } else {
-
                     Toast.makeText(ResistActivity.this, "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다. ", Toast.LENGTH_LONG).show();
                 }
             }

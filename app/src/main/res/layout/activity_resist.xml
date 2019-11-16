@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ResistActivity">
+    tools:context=".ResistActivity"
+    android:background="#FFFFFF"
+    >
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -82,14 +84,19 @@
         android:letterSpacing="0.2"
         android:lineSpacingExtra="3.3sp"
         android:id="@+id/res_btn"
+        android:background="#2979FF"
+        android:textColor="#EEEEEE"
         />
     <Button
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:text="위치"
-        app:layout_constraintTop_toBottomOf="@+id/justlocate"
+        app:layout_constraintTop_toTopOf="@+id/res_locate"
+        app:layout_constraintBottom_toBottomOf="@+id/res_locate"
         app:layout_constraintLeft_toRightOf="@+id/res_locate"
         android:id="@+id/res_btnlocate"
+        android:background="#2979FF"
+        android:textColor="#EEEEEE"
         />
 
 

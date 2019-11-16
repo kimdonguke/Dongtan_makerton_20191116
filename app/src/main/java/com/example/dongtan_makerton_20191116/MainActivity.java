@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     String name, year, locate;
 
     Intent intent;
-    Button testbtn;
+
     SharedPreferences pref1;
     SmsManager smsManager = SmsManager.getDefault();
     @Override
@@ -63,18 +63,9 @@ public class MainActivity extends AppCompatActivity {
 
         bt.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() { //데이터 수신
             public void onDataReceived(byte[] data, String message) {// 형 이거 아두이노에서 값 받을때만 실행되는 코드라 저기 위애 다른곳으로 가야함
-
-                switch (Integer.parseInt(message)){
-                    case 0:
-                        SendMessage(getSettingItem("locate"),getSettingItem("year"),getSettingItem("name")," 사용자 심박수 하강");
-                        break;
-                    case 1:
-                        SendMessage(getSettingItem("locate"),getSettingItem("year"),getSettingItem("name")," 사용자 심박수 상승");
-                        break;
-                    case 2:
                         SendMessage(getSettingItem("locate"),getSettingItem("year"),getSettingItem("name")," 사용자에게 충격 발생");
-                        break;//형 근데 아까 그 권한은 블투
-                }
+
+
                 Log.e("test",message+" "+bt.getConnectedDeviceName());
             }
         });
@@ -111,13 +102,13 @@ public class MainActivity extends AppCompatActivity {
         year=getSettingItem("year");
         name=getSettingItem("name");
         locate=getSettingItem("locate");
-        testbtn=findViewById(R.id.testbtn);
-        testbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SendMessage(getSettingItem("locate"),"김민준이","17","나는 김민준이다"); // ? ㅎ시바 <- 이거 보냄 형한테 동욱아 지금 오는건 당연한건데 앱 삭제했다가 다시했어? ㄱㄷ ㅊ찬희 왔어?  yesrmfj그럼 그거로 전화걸어
-            }
-        });
+//        testbtn=findViewById(R.id.testbtn);
+//        testbtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                SendMessage(getSettingItem("locate"),"김민준이","17","나는 김민준이다"); // ? ㅎ시바 <- 이거 보냄 형한테 동욱아 지금 오는건 당연한건데 앱 삭제했다가 다시했어? ㄱㄷ ㅊ찬희 왔어?  yesrmfj그럼 그거로 전화걸어
+//            }
+//        });
     }
 
     public void onDestroy() {
@@ -198,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
     //지금 내옆에서 자꾸 지렸다 얘기하지ㅜ 마라-찬희 진짜 크
 
     public void SendMessage(String where, String name, String year, String symptom){
-        String phoneNum="01042383021"; //보내보셈  ㅇㅋㅇㅋ ㄱㄷㄱㄷ
+        String phoneNum="01026510268"; //보내보셈  ㅇㅋㅇㅋ ㄱㄷㄱㄷ
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)!= PackageManager.PERMISSION_GRANTED){  //문자 보내는 권한이 없을때는 이 if문이 실행됌 밑에서 권한요청함
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.SEND_SMS},6974);
