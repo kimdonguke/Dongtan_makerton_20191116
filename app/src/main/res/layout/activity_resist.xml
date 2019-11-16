@@ -55,7 +55,7 @@
         app:layout_constraintTop_toBottomOf="@+id/justname"
         app:layout_constraintLeft_toLeftOf="@+id/justname"
         android:id="@+id/res_nametxt"
-
+        android:hint="ex) 임상연"
         />
     <EditText
         android:layout_width="280dp"
@@ -63,6 +63,7 @@
         app:layout_constraintTop_toBottomOf="@+id/justyear"
         app:layout_constraintLeft_toLeftOf="@+id/justyear"
         android:id="@+id/res_yeartxt"
+        android:hint="ex)17, 정수만 입력"
         />
     <EditText
         android:layout_width="210dp"
@@ -74,7 +75,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="가입 완료"
+        android:text="저장 완료"
         app:layout_constraintRight_toRightOf="@+id/res_yeartxt"
         app:layout_constraintTop_toBottomOf="@+id/res_locate"
         android:layout_marginTop="20dp"
