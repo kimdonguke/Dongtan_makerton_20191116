@@ -57,7 +57,6 @@ public class ResistActivity extends AppCompatActivity {
         } else {
             checkRunTimePermission();
         }
-
         String startimage = getSettingItem("imagestrings");//string 형태로 저장된 이미지 불러오기
 
         Button ShowLocationButton = (Button) findViewById(R.id.res_btnlocate);
@@ -67,12 +66,12 @@ public class ResistActivity extends AppCompatActivity {
         name.setText(getSettingItem("name"));
         year.setText(getSettingItem("year"));
         locate.setText(getSettingItem("locate"));
+        imageview = (ImageView) findViewById(R.id.resist_img);
         if(startimage!=null){
             Bitmap bitmap = StringToBitmap(startimage);//string 형태로 저장된 이미지 bitmap 형태로 가공
             imageview.setImageBitmap(bitmap);
         }
         button = findViewById(R.id.res_btn);
-        imageview = (ImageView) findViewById(R.id.resist_img);
 
         imageview.setOnClickListener(new View.OnClickListener() {//이미지 클릭 되었을때
             @Override
