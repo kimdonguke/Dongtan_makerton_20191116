@@ -55,6 +55,7 @@
         app:layout_constraintTop_toBottomOf="@+id/justname"
         app:layout_constraintLeft_toLeftOf="@+id/justname"
         android:id="@+id/res_nametxt"
+        
         />
     <EditText
         android:layout_width="280dp"
